@@ -42,11 +42,18 @@ let deleteBooks = (index) => {
 let displayBooks = () => {
   container.innerHTML = "";
   for (let i = 0; i < library.length; i++) {
+    let newContainer = document.createElement("div");
     let bookName = document.createElement("h2");
     let bookAuthor = document.createElement("h3");
     let bookPages = document.createElement("p");
     let button = document.createElement("button");
     let statusButton = document.createElement("button");
+
+    bookName.setAttribute("id", "book-name");
+    bookAuthor.setAttribute("id", "book-author");
+    bookPages.setAttribute("id", "book-pahes");
+    button.setAttribute("id", "delete-btn");
+    statusButton.setAttribute("id", "status-btn")
 
     bookName.textContent = library.slice(i,i+1).map((ele) => ele.title);
     bookAuthor.textContent = library.slice(i, i+1).map((ele) => ele.author);
@@ -60,13 +67,18 @@ let displayBooks = () => {
       statusButton.textContent = "Not Completed";
     }
     button.setAttribute("id", i + 1);
-    container.append(
+    
+    newContainer.setAttribute("style", "width: 340px; height: 320px; margin: 10px 20px; background-color: #8d99ae; text-align: center;");
+
+    newContainer.append(
       bookName,
       bookAuthor,
       bookPages,
       button,
       statusButton
     );
+
+    container.appendChild(newContainer);
 
     button.addEventListener("click", () => {
       deleteBooks(i);

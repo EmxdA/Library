@@ -8,27 +8,41 @@
     <title>Library</title>
   </head>
   <body>
-    <button id="add-book">Add Book</button>
-    <div id="container"></div>
-
     <div id="add-book-form-container">
       <form>
-        <label for="title-form">Enter title</label>
-        <input type="text" name="title-form" id="title-form" />
-        <label for="author-form">Enter author</label>
-        <input type="text" name="author-form" id="author-form" />
-        <label for="pages-form">Enter pages</label>
-        <input type="number" name="pages-form" id="pages-form" />
-        <label for="status-form">Enter status</label>
-        <input type="checkbox" name="status-form" id="status-form" />
+        <input
+          type="text"
+          name="title-form"
+          id="title-form"
+          placeholder="Title"
+        />
+        <input
+          type="text"
+          name="author-form"
+          id="author-form"
+          placeholder="Author"
+        />
+        <input
+          type="number"
+          name="pages-form"
+          id="pages-form"
+          placeholder="Pages"
+        />
+        <div id="status-container">
+          <label for="status-form">Has book been read?</label>
+          <input type="checkbox" name="status-form" id="status-form" />
+        </div>
       </form>
 
       <button type="submit" id="submit">Submit</button>
     </div>
+    <nav>
+      <h1 id="library-heading">Library App</h1>
+    </nav>
 
-
+    <button id="add-book">New Book</button>
+    <div id="container"></div>
   </body>
 
   <script src="script.js"></script>
 </html>
-
