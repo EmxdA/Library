@@ -6,6 +6,8 @@ const titleForm = document.querySelector("#title-form");
 const authorForm = document.querySelector("#author-form");
 const pagesForm = document.querySelector("#pages-form");
 const statusForm = document.querySelector("#status-form");
+const form = document.querySelector("form");
+const background = document.querySelector("#background-container");
 
 let library = [];
 let objects = [];
@@ -53,43 +55,72 @@ let displayBooks = () => {
     bookAuthor.setAttribute("id", "book-author");
     bookPages.setAttribute("id", "book-pahes");
     button.setAttribute("id", "delete-btn");
-    statusButton.setAttribute("id", "status-btn")
+    statusButton.setAttribute("id", "status-btn");
 
-    bookName.textContent = library.slice(i,i+1).map((ele) => ele.title);
-    bookAuthor.textContent = library.slice(i, i+1).map((ele) => ele.author);
-    bookPages.textContent = library.slice(i, i+1).map((ele) => ele.pages);
+    bookName.textContent = library[i].title;
+    bookAuthor.textContent = "Author: " + library[i].author;
+    bookPages.textContent = "Pages: " + library[i].pages;
     button.textContent = "Delete";
 
     let statusOfBook = library.map((ele) => ele.stat);
-    if (statusOfBook[i]) {
-      statusButton.textContent = "Completed";
-    } else {
-      statusButton.textContent = "Not Completed";
-    }
-    button.setAttribute("id", i + 1);
-    
-    newContainer.setAttribute("style", "width: 340px; height: 320px; margin: 10px 20px; background-color: #8d99ae; text-align: center;");
 
-    newContainer.append(
-      bookName,
-      bookAuthor,
-      bookPages,
-      button,
-      statusButton
+    newContainer.setAttribute(
+      "style",
+      "width: 340px; height: 250px; margin: 10px 20px; box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; text-align: center; border-radius: 20px;"
     );
+
+    button.setAttribute("style", "display: inline-block; margin: 20px 10px;");
+    statusButton.setAttribute("style", "display: inline-block;");
+
+    newContainer.append(bookName, bookAuthor, bookPages, button, statusButton);
+
+
+    if (statusOfBook[i]) {
+      statusButton.textContent = "Read";
+      statusButton.setAttribute("style", "background-color: green;");
+    } else {
+      statusButton.textContent = "Not Read";
+      statusButton.setAttribute("style", "background-color: #ef233c;");
+    }
 
     container.appendChild(newContainer);
 
     button.addEventListener("click", () => {
       deleteBooks(i);
     });
+
+    statusButton.addEventListener("click", () => {
+      if (statusButton.textContent === "Read") {
+        library[i].stat = false;
+        statusButton.textContent = "Not Read";
+        statusButton.setAttribute("style", "background-color: #ef233c;");
+      } else {
+        library[i].stat = true;
+        statusButton.textContent = "Read";
+        statusButton.setAttribute("style", "background-color: green;");
+      }
+    });
   }
 };
 
 addBookBtn.addEventListener("click", () => {
-  formContainer.setAttribute("style", "visibility: unset;");
+  background.setAttribute("style", "filter: blur(5px) brightness(0.9); pointer-events: none;")
+  formContainer.setAttribute("style", "visibility: unset; ");
 });
 
-submitBook.addEventListener("click", addBookToLibrary);
+
+submitBook.addEventListener("click", (e) => {
+  if (
+    titleForm.checkValidity() &
+    authorForm.checkValidity() &
+    pagesForm.checkValidity()
+  ) {
+    e.preventDefault();
+    addBookToLibrary();
+    form.reset();
+    background.setAttribute("style", "filter: none")
+  }
+});
+
 
 displayBooks();
